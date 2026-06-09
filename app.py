@@ -127,17 +127,10 @@ with tab1:
         st.warning("No images found in the directory.")
 
 with tab2:
-    col1, col2 = st.columns(2)
-    with col1:
-        uploaded_img = st.file_uploader("Upload retinal image", type=['png', 'jpg', 'jpeg', 'ppm'], key="u_img", on_change=reset_results)
-        if uploaded_img:
-            file_bytes = np.asarray(bytearray(uploaded_img.read()), dtype=np.uint8)
-            image_rgb = cv2.cvtColor(cv2.imdecode(file_bytes, cv2.IMREAD_COLOR), cv2.COLOR_BGR2RGB)
-    with col2:
-        uploaded_mask_file = st.file_uploader("Upload expert mask", type=['png', 'jpg', 'jpeg', 'tif', 'ppm'], key="u_mask", on_change=reset_results)
-        if uploaded_mask_file:
-            mask_bytes = np.asarray(bytearray(uploaded_mask_file.read()), dtype=np.uint8)
-            uploaded_mask = cv2.imdecode(mask_bytes, cv2.IMREAD_GRAYSCALE)
+    uploaded_img = st.file_uploader("Upload retinal image", type=['png', 'jpg', 'jpeg', 'ppm'], key="u_img", on_change=reset_results)
+    if uploaded_img:
+        file_bytes = np.asarray(bytearray(uploaded_img.read()), dtype=np.uint8)
+        image_rgb = cv2.cvtColor(cv2.imdecode(file_bytes, cv2.IMREAD_COLOR), cv2.COLOR_BGR2RGB)
 
 if uploaded_mask is not None:
     current_gt = uploaded_mask if isinstance(uploaded_mask, np.ndarray) else cv2.imdecode(np.asarray(bytearray(uploaded_mask.read()), dtype=np.uint8), cv2.IMREAD_GRAYSCALE)
